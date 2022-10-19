@@ -182,10 +182,167 @@ class Animal {
 class Dog2: Animal {
     var name: String?
     var age: Int?
-}
 
+}
 var myDog2 = Dog2()
 print(myDog2.numberOfLegs) // Animal 클래스로부터 상속받은 값 (4)
+
+// 클래스는 참조하고, 구조체는 복사함
+var dog1 = Dog() // dog1은 새로 만들어진 Dog()를 참조함
+var dog2 = dog1 // dog2는 dog1이 참조하는 Dog()를 똑같이 참조함
+dog1.name = "찡코" // dog1의 이름을 바꾸면 Dog()의 이름이 바뀌기 때문에
+print(dog2.name as Any) // dog2의 이름을 가져와도 바뀐 이름("찡코")이 출력됨
+
+// 구조체 복사
+var coffee1 = Coffee() // coffee1은 새로 만들어진 Coffee() 그 자체
+var coffee2 = Coffee() // coffee2는 coffee1을 복사한 값 그 자체
+coffee1.name = "아메리카노"
+// coffee2.name  // coffee2는 완전 별개이기 때문에 이름이 바뀌지 않음(nil)
+
+// 생성자 // 클래스와 구조체 모두 생성자를 가지고 있음. 생성자에서는 속성의 초깃값을 지정할수 있음
+
+class Dog3{
+    var name: String?
+    var age: Int?
+    
+    init(){
+        self.age = 0
+    }
+}
+
+struct Coffee2{
+    var name: String?
+    var size: String?
+    
+    init(){
+        self.size = "Tail"
+    }
+    
+}
+
+// 만약 속성이 옵셔널이 아니라면, 항상 초기값을 가져야함. 만약 옵셔널이 아닌 속성이 초깃값을 가지고 있지 않으면 컴파일 에러가 발생
+class Dog4 {
+    var name: String?
+    // var age: Int // Compile Error
+    
+}
+
+// 초깃값 지정방법??
+
+// 1. 속성을 정의할때
+class Dog5{
+    var name: String?
+    var age: Int = 0
+    
+}
+
+// 2. 생성자에서 초깃값 지정
+class Dog6{
+    var name: String?
+    var age: Int
+    
+    init(){
+        self.age = 0
+    }
+    
+}
+
+// 생성자도 함수와 마찬가지로 파라미터를 받을 수 있음
+class Cat {
+    var name: String?
+    var age: Int
+    
+    init(_ name: String?, _ age: Int){
+        self.name = name
+        self.age = age
+    }
+}
+
+var myCat = Cat("haha", 23)
+
+/*
+    만약 상속받은 클래스라면 생성자에서 상위 클래스의 생성자를 호출해줘야 함
+    만약 생성자의 파라미터가 상위클래스의 파라미터와 같다면, override 키워드를 붙여줘야함
+    super.init()은 클래스 속성들의 초깃값이 모두 설정된 후에 해야 함
+    그리고 나서부터 자기 자신에 대한 self 키워드를 사용할 수 있음
+ */
+
+class Dog7: Animal{
+    var name: String?
+    var age: Int
+    
+    override init(){
+        self.age = 0 // Dog7 클래스의 초깃값 설정
+        super.init() // 상위 클래스 생성자 호출
+        print(self.simpleDescription())
+    }
+    
+    func simpleDescription() -> String {
+        if let name = self.name {
+            return "\(name)"
+        } else {
+            return "No name"
+        }
+    }
+}
+
+// 속성 (Properties)
+/*
+    속성은 크게 Stored Property, Computed Property 두가지로 나뉨
+    지금까지 정의하고 사용한 name, age 와 같은 속성들이 Stored Property
+    Computed Property는 get, set을 이용해 정의할 수 있음
+    set에는 새로 설정될 값을 newValue라는 예약어를 통해 접근 가능
+*/
+
+// 구조체는 값 타입으로, 구조체 변수를 새로운 변수에 할당할 때마다 새로운 구조체가 할당됨
+// 즉 같은 구조체를 여러 개의 변수에 할당한 뒤, 값을 변경시키더라고 다른 변수에 영향을 주지 않음 ( 값 자체를 복사)
+struct Hex {
+    var decimal: Int?
+    var hexString: String? {
+        get {
+            if let decimal = self.decimal {
+                return String(decimal, radix: 16) // radix는 진수변환 할 수 있는 문법
+            } else {
+                return nil
+            }
+        }
+        set {
+            if let newValue = newValue {
+                self.decimal = Int(newValue, radix: 16)
+            } else {
+                self.decimal = nil
+            }
+        }
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
