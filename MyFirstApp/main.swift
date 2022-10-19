@@ -317,16 +317,72 @@ struct Hex {
     }
 }
 
+// get set 포맷
+/*
+class test {
+
+    var 프로퍼티명: 타입 {
+        get {
+            //필요한 연산 과정
+            return 반환값
+        }
+        set(매개변수명) {
+            //필요한 연산구문 ex) 프로퍼티명 = 매개변수명
+        }
+    }
+}
+*/
+
+
+/*
+ 튜플(Tuple)
+ 
+ 튜퓰은 어떠한 값들의 묶음임. 배열과 비슷하지만, 배열과는 다르게 길이가 고정되어있음. 값에 접근할 때에도 [] 대신 .을 사용
+ 튜플은 소괄호, 배열은 대괄호
+ */
+
+var coffeeInfo = ("아메리카노", 5100)
+print(coffeeInfo.0) //아메리카노
+print(coffeeInfo.1) // 5100
+
+// 튜플 파라미터에 이름을 붙일 수 있음
+var namedCoffeeInfo = (coffee: "아메리카노", price: 5100)
+print(namedCoffeeInfo.coffee) // 아메리카노
+print(namedCoffeeInfo.price) // 5100
+
+// 간단한 자료형을 만들 때에는 구조체 대신 튜플을 사용하여 만듬
+// 튜플 타입의 어노테이션
+var coffeeInfo1: (String, Int)
+var namedCoffeeInfo1: (coffee: String, price: Int)
+
+// 여러 변수에 값을 지정
+let (coffee, price) = ("아메리카노", 5100)
+print(coffee) // 아메리카노
+print(price) // 5100
 
 
 
 
 
+/// 커피 이름에 맞는 커피 가격 정보를 반환합니다. 일치하는 커피 이름이 없다면 `nil`을 반환합니다.
+///
+/// - parameter name: 커피 이름
+///
+/// - returns: 커피 이름과 가격 정보로 구성된 튜플을 반환합니다.
 
 
-
-
-
+func coffeeInfo(for name: String) -> (name: String, price: Int)? { // 함수 호출 시 for 사용, 내부에선 name으로 사용
+    let coffeeInfoList: [(name: String, price: Int)] = [ // 밖에 [] : 딕셔너리 안에 () : 튜플
+        ("아메리카노", 5100),
+        ("라떼", 5600),
+    ]
+    for coffeeInfo in coffeeInfoList {
+        if coffeeInfo.name == name {
+            return coffeeInfo
+        }
+    }
+    return nil
+}
 
 
 
