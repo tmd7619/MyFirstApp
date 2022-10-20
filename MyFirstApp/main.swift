@@ -429,6 +429,103 @@ var user3: NumPosition = .top
 
 print(user3.rawValue) // 0
 
+// 프로토콜
+/*
+    프로토콜은 인터페이스이며, 최소한으로 가져야할 속성이나 메서드를 정의함
+ 
+ */
+
+/// 전송가능한 인터페이스를 정의합니다.
+protocol Sendable {
+  var from: String? { get }
+  var to: String { get }
+
+  func send()
+}
+
+// 클래스와 구조체에 프로토콜을 적용시킬 수 있음. 프로토콜을 적용하면 프로토콜에서 정의한 속성과 메서드 모두 구현해야 함
+struct Mail: Sendable {
+  var from: String?
+  var to: String
+
+  func send() {
+    print("Send a mail from \(self.from) to \(self.to)")
+  }
+}
+
+struct Feedback: Sendable {
+  var from: String? {
+    return nil // 피드백은 무조건 익명으로 보냅니다.
+  }
+  var to: String
+
+  func send() {
+    print("Send a feedback to \(self.to)")
+  }
+}
+
+
+/*
+ sendAnything() 함수는 Sendable 타입을 파라미터로 받습니다. Mail와 Feedback은 엄연히 다른 타입이지만, 모두 Sendable을 따르고 있으므로 sendAnything() 함수에 전달될 수 있습니다. 그리고, Sendable에서는 send() 함수를 정의하고 있기 때문에 호출이 가능
+ */
+
+func sendAnything(_ sendable: Sendable) {
+  sendable.send()
+}
+
+
+let mail = Mail(from: "devxoul@gmail.com", to: "jeon@stylesha.re")
+sendAnything(mail)
+let feedback = Feedback(to: "devxoul@gmail.com")
+sendAnything(feedback)
+
+// Any와 AnyObject
+
+let anyNumber: Any = 10
+let anyString: Any = "HI"
+
+let anyInstance: AnyObject = Dog()
+
+// Type Casting
+// anyNumber + 1 // Compile Error -> Down Casting 필요
+let number: Int? = anyNumber as? Int // as?를 사용하여 옵셔널을 취해야 함
+
+// 옵셔널이기 때문에, 옵셔널 바인딩 문법도 사용할 수 있음
+if let number = anyNumber as? Int {
+    print(number + 1)
+}
+
+// 타입 검사
+print(anyNumber is Int) // true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
