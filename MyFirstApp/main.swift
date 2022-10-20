@@ -385,10 +385,49 @@ func coffeeInfo(for name: String) -> (name: String, price: Int)? { // 함수 호
 }
 
 
+// enum : 같은 주제로 연관된 데이터들을 멤버로 구성하여 나타내는 자료형
 
+// 열거형 정의하기 //
 
+// 1. 원시값이 웞는 열거형
+enum Position {
+    case top
+    case mid
+    case jug
+    case adc
+    case sup
+    
+}
+// 가로로 나열도 가능
+enum Position2 {
+    case top, mid, jug, adc, sup
+}
 
+// 실제 사용
+var user1: Position = .top
+var user2: Position = .mid
 
+// 2. 원시값이 있는 열거형
+/*
+    case에 원시값을 지정해줄 수도 있는데, 이를 Raw Value라고 함
+    Raw Value가 될 수 있는 자료형은
+    Number Type
+    Character Type
+    String Type
+ */
+
+// 1) Number Type
+enum NumPosition: Int {
+    case top // 0
+    case mid // 1
+    case jug // 2
+    case adc // 3
+    case sup // 4
+}
+
+var user3: NumPosition = .top
+
+print(user3.rawValue) // 0
 
 
 
